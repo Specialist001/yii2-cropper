@@ -48,8 +48,8 @@ Widget has following properties:
 | Name     | Description    | Default |  Required   |
 | --------|---------|-------|------|
 | uploadParameter  | Upload parameter name | file    |No |
-| width  | The final width of the image after cropping | 200    |No |
-| height  | The final height of the image after cropping | 200    |No |
+| width  | The final width of the image after cropping | 300    |No |
+| height  | The final height of the image after cropping | 300    |No |
 | label  | Hint in box for preview | It depends on application language. You can translate this message on your language and make pull-request.    |No |
 | uploadUrl  | URL for uploading and cropping image |     |Yes |
 | prefixUrl  | Prefix URL for uploaded image |     |No |
