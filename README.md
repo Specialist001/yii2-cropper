@@ -34,7 +34,7 @@ use specialist\cropper\CropperWidget;
 ```
 <?php $form = ActiveForm::begin(['id' => 'form-profile']); ?>
     <?php echo $form->field($model, 'photo')->widget(CropperWidget::className(), [
-        'uploadUrl' => Url::toRoute('/controller-name/uploadPhoto'),
+        'uploadUrl' => Url::toRoute('/controller-name/upload-photo'), // 'uploadUrl' => Url::toRoute('/category/upload-photo')
         'width' => 300,
         'height' => 300,
     ]) ?>
@@ -74,8 +74,8 @@ public function actions()
     return [
         'upload-photo' => [
             'class' => UploadAction::className(),
-            'url' => '',
-            'path' => 'some-path',
+            'url' => '../../uploads/',  //you must create 'uploads' directory in your root directory -> '../../uploads/categories/'
+            'path' => '../../uploads/', //you must create 'uploads' directory in your root directory
         ]
     ];
 }
