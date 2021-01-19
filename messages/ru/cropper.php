@@ -17,15 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'DEFAULT_LABEL' => 'Для загрузки новой фотографии, кликните здесь',
+    'DEFAULT_LABEL' => 'Для загрузки новой фотографии, кликните здесь или перетащите файл сюда',
     'CROP_PHOTO' => 'Обрезать фото',
-    'CANCEL' => 'Отмена',
-    'PREVIEW' => 'Предварительный просмотр',
-    'ERROR_NO_SAVE_DIR' => 'Папка для сохранения не создана',
-    'DESCRIPTION' => 'Выберите область и нажмите кнопку обрезать фото',
+    'DELETE_PHOTO' => 'Удалить фото',
     'ERROR_CAN_NOT_UPLOAD_FILE' => 'Невозможно загрузить файл',
     'MISSING_ATTRIBUTE' => 'Атрибут "{attribute}" должен быть указан',
     'ONLY_POST_REQUEST' => 'Допускается только POST-запрос',
+    'UPLOAD_ANOTHER_PHOTO' => 'Загрузить другое фото',
     'TOO_BIG_ERROR' => 'Превышен допустимый размер загружаемого файла ({size} Мб)',
     'EXTENSION_ERROR' => 'Разрешены только следующие форматы файлов: {formats}'
 ];

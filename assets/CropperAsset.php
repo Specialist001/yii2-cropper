@@ -34,5 +34,7 @@ class CropperAsset extends AssetBundle
      */
     public $depends = [
         'yii\web\JqueryAsset',
+        'specialist\cropper\assets\JcropAsset',
+        'specialist\cropper\assets\SimpleAjaxUploaderAsset',
     ];
 }

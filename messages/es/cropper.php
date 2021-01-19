@@ -17,13 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'DEFAULT_LABEL' => 'Click and select or drag an image file here',
-    'CROP_PHOTO' => 'Crop image',
-    'DELETE_PHOTO' => 'Delete image',
-    'ERROR_CAN_NOT_UPLOAD_FILE' => 'Can`t upload file',
-    'MISSING_ATTRIBUTE' => 'Attibute "{attribute}" must be specified',
-    'ONLY_POST_REQUEST' => 'Allowed only POST-request',
-    'UPLOAD_ANOTHER_PHOTO' => 'Upload another photo',
-    'TOO_BIG_ERROR' => 'Exceeded the allowable size of the file ({size} Mb)',
-    'EXTENSION_ERROR' => 'Enable only the following file formats: {formats}'
+    'DEFAULT_LABEL' => 'Para bajar la photo, pulse aqui o desplace la photo en est cuadro',
+    'CROP_PHOTO' => 'Recortar la photo',
+    'DELETE_PHOTO' => 'Suprimir photo',
+    'ERROR_CAN_NOT_UPLOAD_FILE' => 'Poroblema : no se puede bajar esta photo',
+    'MISSING_ATTRIBUTE' => 'El attibuto "{attribute}" tiene que ser especificado',
+    'ONLY_POST_REQUEST' => 'Solamente pedidos en POST-request',
+    'UPLOAD_ANOTHER_PHOTO' => 'Subir otra photo',
+    'TOO_BIG_ERROR' => 'Excedió la talla permisible del fichero ({size} Mb)',
+    'EXTENSION_ERROR' => 'Solamente se pueden subir estos formatos: {formats}'
 ];

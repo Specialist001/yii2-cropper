@@ -4,7 +4,6 @@ namespace specialist\cropper\actions;
 
 use specialist\cropper\CropperWidget;
 use Imagine\Image\Box;
-use Imagine\Image\Point;
 use Yii;
 use yii\base\Action;
 use yii\base\DynamicModel;
@@ -21,9 +20,10 @@ class UploadAction extends Action
     public $uploadParam = 'file';
     public $maxSize = 2097152;
     public $extensions = 'jpeg, jpg, png, gif';
+    public $width = 200;
+    public $height = 200;
     public $jpegQuality = 100;
     public $pngCompressionLevel = 1;
-    public $prefixPath = "";
 
     /**
      * @inheritdoc
@@ -52,7 +52,6 @@ class UploadAction extends Action
             $file = UploadedFile::getInstanceByName($this->uploadParam);
             $model = new DynamicModel(compact($this->uploadParam));
             $model->addRule($this->uploadParam, 'image', [
-                'skipOnEmpty' => false,
                 'maxSize' => $this->maxSize,
                 'tooBig' => Yii::t('cropper', 'TOO_BIG_ERROR', ['size' => $this->maxSize / (1024 * 1024)]),
                 'extensions' => explode(', ', $this->extensions),
@@ -66,44 +65,17 @@ class UploadAction extends Action
             } else {
                 $model->{$this->uploadParam}->name = uniqid() . '.' . $model->{$this->uploadParam}->extension;
                 $request = Yii::$app->request;
-                $width = intval($request->post('w'));
-                $height = intval($request->post('h'));
-                $x = intval($request->post('x'));
-                $y = intval($request->post('y'));
-                $image = Image::getImagine()->open($file->tempName . $request->post('filename'));
-                if (-$x + $width > $image->getSize()->getWidth() || $x > $image->getSize()->getWidth()){
-                    $image = Image::getImagine()->create(new Box($width, $height));
-                }
-                elseif ($x < 0){
-                    $image = Image::crop(
-                        $file->tempName . $request->post('filename'),
-                        $width + $x,
-                        $height,
-                        [0, $y]
-                    );
-                    $white = Image::getImagine()->create(new Box($width, $height));
-                    $image = $white->paste($image, new Point(-$x, 0));
-                }
-                elseif ($x + $width > $image->getSize()->getWidth()){
-                    $image = Image::crop(
-                        $file->tempName . $request->post('filename'),
-                        $image->getSize()->getWidth() - $x,
-                        $height,
-                        [$x, $y]
-                    );
-                    $white = Image::getImagine()->create(new Box($width, $height));
-                    $image = $white->paste($image, new Point(0, 0));
-                }
-                else {
-                    $image = Image::crop(
-                        $file->tempName . $request->post('filename'),
-                        $width,
-                        $height,
-                        [$x, $y]
-                    );
-                }
-                $image->resize(
-                    new Box($request->post('width'), $request->post('height'))
+
+                $width = $request->post('width', $this->width);
+                $height = $request->post('height', $this->height);
+
+                $image = Image::crop(
+                    $file->tempName . $request->post('filename'),
+                    intval($request->post('w')),
+                    intval($request->post('h')),
+                    [$request->post('x'), $request->post('y')]
+                )->resize(
+                    new Box($width, $height)
                 );
 
                 if (!file_exists($this->path) || !is_dir($this->path)) {
@@ -113,8 +85,7 @@ class UploadAction extends Action
                     $saveOptions = ['jpeg_quality' => $this->jpegQuality, 'png_compression_level' => $this->pngCompressionLevel];
                     if ($image->save($this->path . $model->{$this->uploadParam}->name, $saveOptions)) {
                         $result = [
-                            'filelink' => $this->url . $model->{$this->uploadParam}->name,
-                            'prefixPath' => $this->prefixPath
+                            'filelink' => $this->url . $model->{$this->uploadParam}->name
                         ];
                     } else {
                         $result = [

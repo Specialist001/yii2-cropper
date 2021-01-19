@@ -15,14 +15,16 @@ class CropperWidget extends InputWidget
     public $height = 300;
     public $label = '';
     public $uploadUrl;
-    public $prefixUrl = '';
     public $noPhotoImage = '';
     public $maxSize = 2097152;
-    public $avatar = false;
-    public $preview = false;
+    public $thumbnailWidth = 300;
+    public $thumbnailHeight = 300;
+    public $cropAreaWidth = 300;
+    public $cropAreaHeight = 300;
     public $extensions = 'jpeg, jpg, png, gif';
+    public $onCompleteJcrop;
+    public $pluginOptions = [];
     public $aspectRatio = null;
-    public $free = false;
 
     /**
      * @inheritdoc
@@ -61,8 +63,6 @@ class CropperWidget extends InputWidget
      */
     public function registerClientAssets()
     {
-        if ($this->avatar)
-            $this->width = $this->height;
         $view = $this->getView();
         $assets = CropperAsset::register($view);
 
@@ -70,29 +70,25 @@ class CropperWidget extends InputWidget
             $this->noPhotoImage = $assets->baseUrl . '/img/nophoto.png';
         }
 
-        $settings = [
+        $settings = array_merge([
             'url' => $this->uploadUrl,
             'name' => $this->uploadParameter,
-            'maxSize' => $this->maxSize,
-            'width' => $this->width,
-            'height' => $this->height,
-            'prefix_url' => $this->prefixUrl,
-            'attribute' => $this->attribute,
-            'free' => $this->free,
+            'maxSize' => $this->maxSize / 1024,
             'allowedExtensions' => explode(', ', $this->extensions),
-            'upload_error' => Yii::t('cropper', 'ERROR_CAN_NOT_UPLOAD_FILE'),
-            'upload_success' => Yii::t('cropper', 'UPLOAD_SUCCESS'),
             'size_error_text' => Yii::t('cropper', 'TOO_BIG_ERROR', ['size' => $this->maxSize / (1024 * 1024)]),
             'ext_error_text' => Yii::t('cropper', 'EXTENSION_ERROR', ['formats' => $this->extensions]),
             'accept' => 'image/*',
-        ];
+        ], $this->pluginOptions);
 
-        if(is_numeric($this->aspectRatio)) {
-                $settings['aspectRatio'] = $this->aspectRatio;
+        if (is_numeric($this->aspectRatio)) {
+            $settings['aspectRatio'] = $this->aspectRatio;
         }
 
+        if ($this->onCompleteJcrop)
+            $settings['onCompleteJcrop'] = $this->onCompleteJcrop;
+
         $view->registerJs(
-            'initWidget(' . Json::encode($settings) . ')',
+            'jQuery("#' . $this->options['id'] . '").parent().find(".new-photo-area").cropper(' . Json::encode($settings) . ', ' . $this->width . ', ' . $this->height . ');',
             $view::POS_READY
         );
     }

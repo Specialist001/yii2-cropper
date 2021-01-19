@@ -1,17 +1,13 @@
 {
     "name": "specialist/yii2-cropper",
     "description": "Yii2 framework widget for uploading and cropping images",
-    "keywords": ["yii2", "extension", "widget", "cropper", "jscropper", "image", "jquery", "plugin"],
+    "keywords": ["yii2", "extension", "widget", "cropper", "jscropper", "image"],
     "type": "yii2-extension",
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-imagine": "*",
-        "bower-asset/jquery": "*"
-    },
-    "require-dev": {
-        "yiisoft/yii2": "*",
-        "yiisoft/yii2-imagine": "*",
-        "bower-asset/jquery": "*"
+        "bower-asset/jcrop": "=0.9.12",
+        "bower-asset/simple-ajax-uploader": "2.6.1"
     },
     "license": "MIT",
     "authors": [
